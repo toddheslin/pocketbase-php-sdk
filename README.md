@@ -1,13 +1,6 @@
-### Php Sdk for Pocketbase
+### PHP SDK for Pocketbase
 
-***
-##### This Repository was moved to my own gitlab:
-https://gitlab.jonathan-martz.de/softwareentwicklung/pocketbase-php-sdk
-***
-
-``` bash
-composer require jonathan-martz/pocketbase-php-sdk
-```
+This repository is a fork of [Jonathan's work](https://github.com/mkay-development/pocketbase-php-sdk). I've extended it to deal with specific issues we needed to address for a Wordpress PHP plugin. I have also moved it back to Github because I do all of my work here.
 
 ``` php
 // Example init and use
