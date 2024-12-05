@@ -90,27 +90,41 @@ class Collection
      * @param int $batch
      * @param array $queryParams
      * @return array
+     * @throws \Exception
      */
-    public function getFullList(int $batch = 200, array $queryParams = []): array
-    {
-        $queryParams = [... $queryParams, ['perPage' => $batch]];
-        $getParams = !empty($queryParams) ? http_build_query($queryParams) : "";
-        $response = $this->doRequest($this->url . "/api/collections/" . $this->collection . "/records?" . $getParams, 'GET');
+     public function getFullList(int $batch = 200, array $queryParams = []): array
+     {
+         $queryParams = [... $queryParams, ['perPage' => $batch]];
+         $getParams = !empty($queryParams) ? http_build_query($queryParams) : "";
+         $response = $this->doRequest($this->url . "/api/collections/" . $this->collection . "/records?" . $getParams, 'GET');
 
-        return json_decode($response, JSON_FORCE_OBJECT);
-    }
+         $decoded = json_decode($response, JSON_FORCE_OBJECT);
+         // Check for error response
+         if (isset($decoded['code']) && isset($decoded['message'])) {
+             throw new \Exception($decoded['message'], $decoded['code']);
+         }
+         return $decoded;
+     }
 
     /**
      * @param string $filter
      * @param array $queryParams
      * @return array
+     * @throws \Exception
      */
     public function getFirstListItem(string $filter, array $queryParams = []): array
     {
         $queryParams['perPage'] = 1;
         $getParams = !empty($queryParams) ? http_build_query($queryParams) : "";
         $response = $this->doRequest($this->url . "/api/collections/" . $this->collection . "/records?" . $getParams, 'GET');
-        return json_decode($response, JSON_FORCE_OBJECT)['items'][0];
+        $decoded = json_decode($response, JSON_FORCE_OBJECT);
+        // Check for error response
+        if (isset($decoded['code']) && isset($decoded['message'])) {
+            throw new \Exception($decoded['message'], $decoded['code']);
+        }
+        if (isset($decoded['items']) && !empty($decoded['items'])) {
+            return $decoded['items'][0];
+        }
     }
 
     /**

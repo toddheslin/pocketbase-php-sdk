@@ -1,9 +1,13 @@
 {
-  "name": "jonathan-martz/pocketbase-php-sdk",
+  "name": "toddheslin/pocketbase-php-sdk",
   "license": "MIT",
   "authors": [
     {
       "name": "Jonathan Martz",
+      "role": "Original Author"
+    },
+    {
+      "name": "Todd Heslin",
       "role": "Maintainer"
     }
   ],
@@ -11,7 +15,8 @@
     "classmap": [
       "src/Client.php",
       "src/Settings.php",
-      "src/Collection.php"]
+      "src/Collection.php"
+    ]
   },
   "require": {
     "php": "^8.1|^8.2",
