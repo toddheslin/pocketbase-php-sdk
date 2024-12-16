@@ -99,6 +99,12 @@ class Collection
          $response = $this->doRequest($this->url . "/api/collections/" . $this->collection . "/records?" . $getParams, 'GET');
 
          $decoded = json_decode($response, JSON_FORCE_OBJECT);
+
+         // Check if offline
+         if (is_null($decoded)){
+             throw new \Exception('Error communicating with Pocketbase', 500);
+         }
+
          // Check for error response
          if (isset($decoded['code']) && isset($decoded['message'])) {
              throw new \Exception($decoded['message'], $decoded['code']);
@@ -118,6 +124,11 @@ class Collection
         $getParams = !empty($queryParams) ? http_build_query($queryParams) : "";
         $response = $this->doRequest($this->url . "/api/collections/" . $this->collection . "/records?" . $getParams, 'GET');
         $decoded = json_decode($response, JSON_FORCE_OBJECT);
+
+        // Check if offline
+        if (is_null($decoded)){
+            throw new \Exception('Error communicating with Pocketbase', 500);
+        }
         // Check for error response
         if (isset($decoded['code']) && isset($decoded['message'])) {
             throw new \Exception($decoded['message'], $decoded['code']);
